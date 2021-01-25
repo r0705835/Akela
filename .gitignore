@@ -1,0 +1,7 @@
+# Node.js
+node_modules/
+package.json
+package-lock.json
+
+# Secret files that should not be on the repository
+secret/
