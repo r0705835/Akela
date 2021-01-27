@@ -1,5 +1,5 @@
 require('dotenv').config();
-const messageService = require('./message_replies.js')
+const messageService = require('./commands/message_replies.js')
 const { prefix } = require('./config.json');
 const Discord = require('discord.js');
 const client = new Discord.Client();
