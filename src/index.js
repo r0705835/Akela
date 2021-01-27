@@ -1,4 +1,4 @@
-const discordToken = require('../secret/discord_token.js')
+require('dotenv').config();
 const messageService = require('./message_replies.js')
 const Discord = require('discord.js')
 const client = new Discord.Client()
@@ -11,4 +11,4 @@ client.on('message', message => {
 	messageService.reply(message)
 }); 
 
-client.login(discordToken.BOT_SECRET_TOKEN)
+client.login(process.env.TOKEN)
