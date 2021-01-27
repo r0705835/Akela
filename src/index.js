@@ -1,5 +1,6 @@
 require('dotenv').config();
 const messageService = require('./message_replies.js')
+const { prefix } = require('./config.json');
 const Discord = require('discord.js')
 const client = new Discord.Client()
 
@@ -8,7 +9,9 @@ client.on('ready', () => {
 })
 
 client.on('message', message => {
-	messageService.reply(message)
+    if (message.content.startsWith(prefix)) {
+        messageService.reply(message);
+    }
 }); 
 
 client.login(process.env.TOKEN)
