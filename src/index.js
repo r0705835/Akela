@@ -9,9 +9,10 @@ client.on('ready', () => {
 })
 
 client.on('message', message => {
-    if (message.content.startsWith(prefix)) {
-        messageService.reply(message);
-    }
-}); 
+    if (!message.content.startsWith(prefix) || message.author.bot) return;
+    const args = message.content.slice(prefix.length).trim().split(' ');
+    const command = args.shift().toLowerCase();
+    messageService.reply(command);
+});
 
 client.login(process.env.TOKEN);
