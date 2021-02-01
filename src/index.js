@@ -27,14 +27,15 @@ client.on('message', message => {
     const args = message.content.slice(prefix.length).trim().split(' ');
     const commandName = args.shift().toLowerCase();
 
-    if (!client.commands.has(commandName)) return;
+    const command = client.commands.get(commandName)
+        || client.commands.find(cmd => cmd.aliases && cmd.aliases.includes(commandName));
 
-    const command = client.commands.get(commandName);
+    if (!command) return;
 
     if (command.args && !args.length) {
         return message.channel.send(`You didn't provide any arguments, ${message.author}!`);
     }
-    
+
     // Cooldowns from https://discordjs.guide/command-handling/adding-features.html#cooldowns
     if(!cooldowns.has(command.name)) {
         cooldowns.set(command.name, new Discord.Collection());
