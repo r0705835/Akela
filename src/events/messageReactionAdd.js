@@ -2,6 +2,9 @@ const { roleMessage, partyGamesId, ShooterId, CrafterId, EndervilleId } = requir
 const client = require('../index.js').client;
 
 client.on('messageReactionAdd', async (reaction, user) => {
+    // Uncomment the lines below to update the info new peeps message
+    /* const { msg } = require('../message.js')
+    reaction.message.edit(msg)*/
     if (reaction.message.id !== roleMessage) return;
 
     // When we receive a reaction we check if the reaction is partial or not
