@@ -5,7 +5,6 @@ const Discord = require('discord.js');
 
 const client = new Discord.Client({ partials: ['MESSAGE', 'CHANNEL', 'REACTION'] });
 module.exports = { client };
-
 client.commands = new Discord.Collection();
 const cooldowns = new Discord.Collection();
 
@@ -27,7 +26,7 @@ for (const file of eventFiles) {
 
 client.on('ready', () => {
     console.log("Connected as " + client.user.tag);
-})
+});
 
 client.on('message', message => {
     if (!message.content.startsWith(prefix) || message.author.bot) return;
@@ -45,7 +44,7 @@ client.on('message', message => {
     }
 
     // Cooldowns from https://discordjs.guide/command-handling/adding-features.html#cooldowns
-    if(!cooldowns.has(command.name)) {
+    if (!cooldowns.has(command.name)) {
         cooldowns.set(command.name, new Discord.Collection());
     }
 
@@ -58,7 +57,7 @@ client.on('message', message => {
         const expirationTime = timestamps.get(message.author.id) + cooldownAmount;
 
         if (now < expirationTime) {
-            const timeLeft = (expirationTime - now ) / 1000;
+            const timeLeft = (expirationTime - now) / 1000;
             return message.reply(`please wait ${timeLeft.toFixed(1)} more second(s) before reusing the \`${command.name}\` command.`)
         }
     }
