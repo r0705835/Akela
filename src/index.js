@@ -1,9 +1,10 @@
-const { roleMessage, prefix, token } = require('../config.json');
+const { roleMessage, prefix, token, partyGamesId, ShooterId, CrafterId, EndervilleId } = require('../config.json');
 const fs = require('fs');
 const path = require('path');
 const Discord = require('discord.js');
 
 const client = new Discord.Client({ partials: ['MESSAGE', 'CHANNEL', 'REACTION'] });
+
 client.commands = new Discord.Collection();
 const cooldowns = new Discord.Collection();
 
@@ -18,10 +19,7 @@ for (const file of commandFiles) {
 }
 
 client.on('messageReactionAdd', async (reaction, user) => {
-    console.log(reaction.message.id)
-
     if (reaction.message.id !== roleMessage) return;
-    console.log('test')
 
     // When we receive a reaction we check if the reaction is partial or not
 	if (reaction.partial) {
@@ -38,23 +36,21 @@ client.on('messageReactionAdd', async (reaction, user) => {
     const member = reaction.message.guild.members.cache.find(member => member.id === user.id);
 
     switch (reaction.emoji.name) {
-        case "1️⃣":
-            await member.roles.add('772423151597518858');
+        case "🎉":
+            await member.roles.add(partyGamesId);
             break;
-        case "2️⃣":
+        case "🔫":
+            await member.roles.add(ShooterId);
             break;
-        case "3️⃣":
+        case "⛏️":
+            await member.roles.add(CrafterId);
             break;
-        case "4️⃣":
+        case "🎥":
+            await member.roles.add(EndervilleId);
             break;
         default:
             break;
     }
-
-	// Now the message has been cached and is fully available
-	console.log(`${reaction.message.author}'s message "${reaction.message.content}" gained a reaction!`);
-	// The reaction is now also fully available and the properties will be reflected accurately:
-	console.log(`${reaction.count} user(s) have given the same reaction to this message!`);
 });
 
 client.on('ready', () => {
