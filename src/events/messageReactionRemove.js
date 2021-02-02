@@ -1,4 +1,4 @@
-const { roleMessage, partyGamesId, ShooterId, CrafterId, EndervilleId } = require('../../config.json');
+const { roleMessage, partyGamesId, ShooterId, CrafterId, EndervilleId, workspaceId } = require('../../config.json');
 const client = require('../index.js').client;
 
 client.on('messageReactionRemove', async (reaction, user) => {
@@ -30,6 +30,9 @@ client.on('messageReactionRemove', async (reaction, user) => {
             break;
         case "🎥":
             await member.roles.remove(EndervilleId);
+            break;
+        case "☕":
+            await member.roles.remove(workspaceId);
             break;
         default:
             break;
