@@ -1,6 +1,6 @@
 module.exports = {
 	name: 'robbe',
-	aliases: ['Haubourdyn', 'moose', 'robbedoes'],
+	aliases: ['haubourdyn', 'moose', 'robbedoes'],
     cooldown: 5,
 	description: 'Commands for robbe',
 	execute(message, args) {
