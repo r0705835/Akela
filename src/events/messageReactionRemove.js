@@ -1,8 +1,7 @@
-const { roleMessage, partyGamesId, ShooterId, CrafterId, EndervilleId, workspaceId } = require('../../config.json');
 const client = require('../index.js').client;
 
 client.on('messageReactionRemove', async (reaction, user) => {
-    if (reaction.message.id !== roleMessage) return;
+    if (reaction.message.id !== process.env.roleMessage) return;
 
     // When we receive a reaction we check if the reaction is partial or not
 	if (reaction.partial) {
@@ -20,19 +19,19 @@ client.on('messageReactionRemove', async (reaction, user) => {
 
     switch (reaction.emoji.name) {
         case "🎉":
-            await member.roles.remove(partyGamesId);
+            await member.roles.remove(process.env.partyGamesId);
             break;
         case "🔫":
-            await member.roles.remove(ShooterId);
+            await member.roles.remove(process.env.ShooterId);
             break;
         case "⛏️":
-            await member.roles.remove(CrafterId);
+            await member.roles.remove(process.env.CrafterId);
             break;
         case "🎥":
-            await member.roles.remove(EndervilleId);
+            await member.roles.remove(process.env.EndervilleId);
             break;
         case "☕":
-            await member.roles.remove(workspaceId);
+            await member.roles.remove(process.env.workspaceId);
             break;
         default:
             break;
