@@ -1,11 +1,11 @@
 module.exports = {
-	name: 'hendrik',
-	aliases: ['hendrick', 'henk', 'hendrik of the lake what is your wisdom', 'lordvolderik'],
+	name: 'robbe',
+	aliases: ['Haubourdyn', 'moose', 'robbedoes'],
     cooldown: 5,
-	description: 'Commands for hendrik',
+	description: 'Commands for robbe',
 	execute(message, args) {
-		const { hendrik } = require('./quotes.json');
-		const content = hendrik[Math.floor(Math.random() * hendrik.length)];
+		const { robbe } = require('./quotes.json');
+		const content = robbe[Math.floor(Math.random() * robbe.length)];
 		message.channel.send(content);
 	},
 };
