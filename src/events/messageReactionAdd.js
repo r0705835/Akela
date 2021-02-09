@@ -22,7 +22,7 @@ client.on('messageReactionAdd', async (reaction, user) => {
 
     switch (reaction.emoji.name) {
         case "🎉":
-            await member.roles.add(process.env.partyGamesId);
+            await member.roles.add(process.env.PartyGamesId);
             break;
         case "🔫":
             await member.roles.add(process.env.ShooterId);
@@ -34,7 +34,7 @@ client.on('messageReactionAdd', async (reaction, user) => {
             await member.roles.add(process.env.EndervilleId);
             break;
         case "☕":
-            await member.roles.add(process.env.workspaceId);
+            await member.roles.add(process.env.WorkspaceId);
             break;
         default:
             break;

@@ -19,7 +19,7 @@ client.on('messageReactionRemove', async (reaction, user) => {
 
     switch (reaction.emoji.name) {
         case "🎉":
-            await member.roles.remove(process.env.partyGamesId);
+            await member.roles.remove(process.env.PartyGamesId);
             break;
         case "🔫":
             await member.roles.remove(process.env.ShooterId);
@@ -31,7 +31,7 @@ client.on('messageReactionRemove', async (reaction, user) => {
             await member.roles.remove(process.env.EndervilleId);
             break;
         case "☕":
-            await member.roles.remove(process.env.workspaceId);
+            await member.roles.remove(process.env.WorkspaceId);
             break;
         default:
             break;
