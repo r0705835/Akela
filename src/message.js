@@ -11,7 +11,7 @@ const msg = (
         " ☕: For the workspace, where you can work while having a casual chat.\n" +
 
         "\n" +
-        "**Bot commando's**\n" +
+        "**Bot commands**\n" +
         "―――――――――――――――――――――――――\n" +
         "Akela Bot: $help for more info.\n" +
         "Groovy Bot: -help for more info.\n" +
