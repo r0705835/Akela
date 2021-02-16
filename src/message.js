@@ -9,6 +9,7 @@ const msg = (
         " ⛏️: For anything Minecraft related.\n" +
         " 🎥: For Enderville, a full-scale minecraft video series.\n" +
         " ☕: For the workspace, where you can work while having a casual chat.\n" +
+        " 🎴: For card games like magic the gathering.\n" +
 
         "\n" +
         "**Bot commands**\n" +
