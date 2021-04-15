@@ -39,6 +39,9 @@ client.on('messageReactionAdd', async (reaction, user) => {
         case "🎴":
             await member.roles.add(process.env.CardgamerId);
             break;
+        case "🏎️":
+            await member.roles.add(process.env.RacerId);
+            break; 
         default:
             break;
     }

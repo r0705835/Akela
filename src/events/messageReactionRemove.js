@@ -36,6 +36,9 @@ client.on('messageReactionRemove', async (reaction, user) => {
         case "🎴":
             await member.roles.remove(process.env.CardgamerId);
             break;
+        case "🏎️":
+            await member.roles.remove(process.env.RacerId);
+            break;
         default:
             break;
     }
