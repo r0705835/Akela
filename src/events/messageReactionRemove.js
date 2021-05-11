@@ -16,30 +16,9 @@ client.on('messageReactionRemove', async (reaction, user) => {
     }
 
     const member = reaction.message.guild.members.cache.find(member => member.id === user.id);
-
-    switch (reaction.emoji.name) {
-        case "🎉":
-            await member.roles.remove(process.env.PartyGamesId);
-            break;
-        case "🔫":
-            await member.roles.remove(process.env.ShooterId);
-            break;
-        case "⛏️":
-            await member.roles.remove(process.env.CrafterId);
-            break;
-        case "🎥":
-            await member.roles.remove(process.env.EndervilleId);
-            break;
-        case "☕":
-            await member.roles.remove(process.env.WorkspaceId);
-            break;
-        case "🎴":
-            await member.roles.remove(process.env.CardgamerId);
-            break;
-        case "🏎️":
-            await member.roles.remove(process.env.RacerId);
-            break;
-        default:
-            break;
+    const roles = require("./role.json").roles;
+    let role = roles.find(item => item.name === reaction.emoji.name);
+    if(role) {
+        await member.roles.remove(role.id);
     }
 });
