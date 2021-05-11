@@ -19,30 +19,9 @@ client.on('messageReactionAdd', async (reaction, user) => {
     }
 
     const member = reaction.message.guild.members.cache.find(member => member.id === user.id);
-
-    switch (reaction.emoji.name) {
-        case "🎉":
-            await member.roles.add(process.env.PartyGamesId);
-            break;
-        case "🔫":
-            await member.roles.add(process.env.ShooterId);
-            break;
-        case "⛏️":
-            await member.roles.add(process.env.CrafterId);
-            break;
-        case "🎥":
-            await member.roles.add(process.env.EndervilleId);
-            break;
-        case "☕":
-            await member.roles.add(process.env.WorkspaceId);
-            break;
-        case "🎴":
-            await member.roles.add(process.env.CardgamerId);
-            break;
-        case "🏎️":
-            await member.roles.add(process.env.RacerId);
-            break; 
-        default:
-            break;
+    const roles = require("./role.json").roles;
+    let role = roles.find(item => item.name === reaction.emoji.name);
+    if(role) {
+        await member.roles.add(role.id);
     }
 });
