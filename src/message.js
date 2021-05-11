@@ -11,6 +11,7 @@ const msg = (
         " ☕: For the workspace, where you can work quietly or go the meeting room to have a casual chat.\n" +
         " 🎴: For card games like magic the gathering.\n" +
         " 🏎️: For racing games like Formula 1, Mario kart, etc. \n" +
+        " 🧍: For the Stand-up. Enable visionary convergence! \n" +
 
 
         "\n" +
