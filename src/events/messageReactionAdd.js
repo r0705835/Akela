@@ -19,7 +19,7 @@ client.on('messageReactionAdd', async (reaction, user) => {
     }
 
     const member = reaction.message.guild.members.cache.find(member => member.id === user.id);
-    const roles = require("./role.json").roles;
+    const roles = require("./role.json");
     let role = roles.find(item => item.name === reaction.emoji.name);
     if(role) {
         await member.roles.add(role.id);
