@@ -4,5 +4,4 @@ node_modules/
 # Secret files that should not be on the repository
 secret/
 *.env
-config.json
 /prod/
