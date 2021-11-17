@@ -3,6 +3,7 @@ import { CommandInt } from "../interfaces/CommandInt";
 export const edit: CommandInt = {
     name: "edit",
     description: "Edit a previous 100 Days of Code post",
+    cooldown: 3,
     run: async (message) => {
         const { author, channel, content } = message;
         const [, targetId, ...text] = content.split(" ");

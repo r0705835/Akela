@@ -5,6 +5,7 @@ import { MessageEmbed } from "discord.js";
 export const view: CommandInt = {
     name: "view",
     description: "View your current 100 Days of Code progress",
+    cooldown: 3,
     run: async (message) => {
         const { author, channel, content } = message;
         const targetCamperData = await CamperModel.findOne({ discordId: author.id });

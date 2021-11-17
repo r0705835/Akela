@@ -5,6 +5,7 @@ import { MessageEmbed } from 'discord.js';
 export const oneHundred: CommandInt = {
     name: "100",
     description: "Creates a 100 Days of Code update",
+    cooldown: 3,
     run: async (message) => {
         const { author, channel, content } = message;
         const text = content.split("").slice(1).join(" ");

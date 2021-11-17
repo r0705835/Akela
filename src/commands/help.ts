@@ -5,6 +5,7 @@ import { CommandList } from "./_CommandsList";
 export const help: CommandInt = {
     name: "help",
     description: "Returns information on the bots available commands.",
+    cooldown: 3,
     run: async (message) => {
         const helpEmbed = new MessageEmbed();
         helpEmbed.setTitle("Available Commands!");
