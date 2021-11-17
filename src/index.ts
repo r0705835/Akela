@@ -1,3 +1,4 @@
+require('dotenv').config();
 import { Client } from "discord.js";
 import { connectDatabase } from "./database/connectDatabase";
 import { onMessage } from "./events/onMessage";
