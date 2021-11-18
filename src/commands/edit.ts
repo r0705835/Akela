@@ -17,7 +17,7 @@ export const edit: CommandInt = {
         const targetEmbed = targetMessage.embeds[0];
 
         if (targetEmbed.author?.name !== author.username + "#" + author.discriminator) {
-            await channel.send("This does not appear to be your 100 DAys of Code post. You cannot edit it.");
+            await channel.send("This does not appear to be your 100 Days of Code post. You cannot edit it.");
             return;
         }
 
