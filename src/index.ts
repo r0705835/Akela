@@ -3,6 +3,7 @@ import { Client } from "discord.js";
 import { connectDatabase } from "./database/connectDatabase";
 import { onMessage } from "./events/onMessage";
 import { onReactionAdd } from "./events/onReactionAdd";
+import { onReactionRemove } from "./events/onReactionRemove";
 import { validateEnv } from "./utils/validateEnv";
 
 (async () => {
@@ -12,6 +13,7 @@ import { validateEnv } from "./utils/validateEnv";
     BOT.on("ready", () => console.log("Connected to Discord!"));
     BOT.on("message", async (message) => await onMessage(message));
     BOT.on('messageReactionAdd', async (reaction, user) => await onReactionAdd(reaction, user));
+    BOT.on('messageReactionRemove', async (reaction, user) => await onReactionRemove(reaction, user));
     await connectDatabase();
     await BOT.login(process.env.BOT_TOKEN);
 })();
