@@ -1,3 +1,3 @@
-class Role {
+class BaseRole {
     constructor(readonly name: string, readonly id: string){}
 }
