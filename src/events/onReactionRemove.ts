@@ -1,5 +1,5 @@
 import { MessageReaction, PartialUser, Role, User } from "discord.js";
-import { RoleInt } from "../interfaces/RoleInt";
+import { BaseRole } from "../classes/BaseRole";
 import roleJSON from "./role.json";
 
 
@@ -25,15 +25,15 @@ export const onReactionRemove = async (reaction: MessageReaction, user: PartialU
         }
     }
     const member = reaction.message.guild?.members.cache.find(member => member.id === user.id)!;
-    let localRole: RoleInt = search(roleJSON.roles, reaction.emoji.name)[0];
-    if (localRole) {
-        const assignableRole: Role = reaction.message.guild?.roles.cache.find(role => role.id === localRole.id)!;
+    let baseRole: BaseRole = search(roleJSON.roles, reaction.emoji.name)[0];
+    if (baseRole) {
+        const assignableRole: Role = reaction.message.guild?.roles.cache.find(role => role.id === baseRole.id)!;
         await member.roles.remove(assignableRole);
     }
 }
 
-function search(data: any, s: string): RoleInt[] {
-    let result: RoleInt[] = [];
+function search(data: any, s: string): BaseRole[] {
+    let result: BaseRole[] = [];
     for (let i = 0; i < data.length; i++) {
         if (data[i].name === s) {
             result[i] = data[i];

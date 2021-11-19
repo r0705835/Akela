@@ -1,3 +1,3 @@
-class BaseRole {
+export class BaseRole {
     constructor(readonly name: string, readonly id: string){}
 }
