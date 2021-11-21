@@ -1,6 +1,5 @@
+import { MessageEmbed } from 'discord.js';
 import { CommandInt } from "../interfaces/CommandInt";
-import { GuildMember, MessageEmbed } from 'discord.js';
-import { CommandList } from "./_CommandsList";
 
 export const nicknames: CommandInt = {
     name: "nicknames",
@@ -14,9 +13,9 @@ export const nicknames: CommandInt = {
         try {
             const names: string[] = [];
             const guild = message.guild!;
-            const members = await guild.members.fetch({time: 30000, force: true});
+            const members = await guild.members.fetch({ time: 30000, force: true });
             members.forEach(member => {
-                if(member.nickname) {
+                if (member.nickname) {
                     names.push(member.nickname);
                 }
             });
@@ -25,6 +24,6 @@ export const nicknames: CommandInt = {
         } catch (error) {
             console.log(error);
         }
-        
+
     }
 }
