@@ -2,11 +2,12 @@ import { Message, Collection } from "discord.js";
 import { CommandList } from "../commands/_CommandsList";
 import { CommandInt } from "../interfaces/CommandInt";
 
+
 const prefix: string = "$";
 // Cooldowns from https://discordjs.guide/command-handling/adding-features.html#cooldowns
 const cooldowns: Collection<string, Collection<string, number>> = new Collection();
 
-function cooldown(command: CommandInt, message: Message){
+function cooldown(command: CommandInt, message: Message) {
     // Cooldowns from https://discordjs.guide/command-handling/adding-features.html#cooldowns
     if (!cooldowns.has(command.name)) {
         cooldowns.set(command.name, new Collection());
@@ -16,9 +17,8 @@ function cooldown(command: CommandInt, message: Message){
     const timestamps: Collection<string, number> = cooldowns.get(command.name)!;
     const cooldownAmount = (command.cooldown || 3) * 1000;
 
-
     if (timestamps.has(message.author.id)) {
-        if(!timestamps.get(message.author.id)) { return; }
+        if (!timestamps.get(message.author.id)) { return; }
         const expirationTime = timestamps.get(message.author.id)! + cooldownAmount;
 
         if (now < expirationTime) {
@@ -32,7 +32,7 @@ function cooldown(command: CommandInt, message: Message){
 
 export const onMessage = async (message: Message) => {
     if (!message.content.startsWith(prefix) || message.author.bot) return;
-    
+
     for (const Command of CommandList) {
         if (message.content.startsWith(prefix + Command.name)) {
             try {
@@ -44,6 +44,5 @@ export const onMessage = async (message: Message) => {
             break;
         }
     }
-
     console.log(message.content);
 }
