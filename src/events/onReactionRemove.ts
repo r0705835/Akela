@@ -24,11 +24,14 @@ export const onReactionRemove = async (reaction: MessageReaction, user: PartialU
             return;
         }
     }
-    const member = reaction.message.guild?.members.cache.find(member => member.id === user.id)!;
-    let baseRole: BaseRole = search(roleJSON.roles, reaction.emoji.name)[0];
-    if (baseRole) {
+
+    try {
+        const member = reaction.message.guild?.members.cache.find(member => member.id === user.id)!;
+        let baseRole: BaseRole = search(roleJSON.roles, reaction.emoji.name)[0];
         const assignableRole: Role = reaction.message.guild?.roles.cache.find(role => role.id === baseRole.id)!;
         await member.roles.remove(assignableRole);
+    } catch (error) {
+        console.log(error);
     }
 }
 
