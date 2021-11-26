@@ -5,5 +5,6 @@ import { edit } from "./edit";
 import { help } from "./help";
 import { reactionMessage } from "./reactionMessage";
 import { nicknames } from "./nicknames";
+import { interaction } from "./interaction";
 
-export const CommandList: CommandInt[] = [oneHundred, view, edit, help, reactionMessage, nicknames];
+export const CommandList: CommandInt[] = [oneHundred, view, edit, help, reactionMessage, nicknames, interaction];
