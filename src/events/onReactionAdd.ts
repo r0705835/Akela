@@ -26,21 +26,25 @@ export const onReactionAdd = async (reaction: MessageReaction, user: PartialUser
             return;
         }
     }
-    
+
     try {
-        const member: GuildMember = reaction.message.guild!.members.cache.find(member => member.id === user.id)!;
-        let targetMemberData = await MemberModel.findOne({'discordId': member.id});
+        let targetMemberData = await MemberModel.findOne({ 'discordId': user.id });
         if (!targetMemberData) {
             targetMemberData = await MemberModel.create({
-                discordId: member.id,
-                username: member.displayName
+                discordId: user.id,
+                username: user.username
             });
         }
-        
+    } catch (error) {
+        console.error('Something went wrong with checking the activity of the user: ', error);
+    }
+
+    try {
+        const member: GuildMember = reaction.message.guild!.members.cache.find(member => member.id === user.id)!;
         const baseRole: BaseRole = search(roleJSON.roles, reaction.emoji.name)[0];
         const assignableRole: Role = reaction.message.guild!.roles.cache.find(role => role.id === baseRole.id)!;
         await member.roles.add(assignableRole);
-    } catch(error) {
+    } catch (error) {
         console.error('Something went wrong trying to assign the role', error);
     }
 }
