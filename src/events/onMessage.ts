@@ -1,6 +1,6 @@
 import { Message, Collection, User } from "discord.js";
 import { CommandList } from "../commands/_CommandsList";
-import MemberModel from "../database/models/MemberModel";
+import { manageMemberData } from "../database/manageMemberData";
 import { CommandInt } from "../interfaces/CommandInt";
 
 
@@ -32,19 +32,7 @@ function cooldown(command: CommandInt, message: Message) {
 }
 
 export const onMessage = async (message: Message) => {
-    try {
-        const user: User = message.member!.user!;
-        let targetMemberData = await MemberModel.findOne({ 'discordId': user.id });
-        if (!targetMemberData) {
-            targetMemberData = await MemberModel.create({
-                discordId: user.id,
-                username: user.username
-            });
-        }
-    } catch (error) {
-        console.error('Something went wrong with checking the activity of the user: ', error);
-    }
-
+    manageMemberData(message.member!);
     if (!message.content.startsWith(prefix) || message.author.bot) return;
 
     for (const Command of CommandList) {
