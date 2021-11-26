@@ -1,6 +1,6 @@
 import { MessageReaction, PartialUser, Role, User } from "discord.js";
 import { BaseRole } from "../classes/BaseRole";
-import MemberModel from "../database/models/MemberModel";
+import { manageMemberData } from "../database/manageMemberData";
 import roleJSON from "./role.json";
 
 
@@ -27,19 +27,8 @@ export const onReactionRemove = async (reaction: MessageReaction, user: PartialU
     }
 
     try {
-        let targetMemberData = await MemberModel.findOne({ 'discordId': user.id });
-        if (!targetMemberData) {
-            targetMemberData = await MemberModel.create({
-                discordId: user.id,
-                username: user.username
-            });
-        }
-    } catch (error) {
-        console.error('Something went wrong with checking the activity of the user: ', error);
-    }
-
-    try {
         const member = reaction.message.guild?.members.cache.find(member => member.id === user.id)!;
+        manageMemberData(member);
         let baseRole: BaseRole = search(roleJSON.roles, reaction.emoji.name)[0];
         const assignableRole: Role = reaction.message.guild?.roles.cache.find(role => role.id === baseRole.id)!;
         await member.roles.remove(assignableRole);
