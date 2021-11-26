@@ -1,5 +1,6 @@
 import { GuildMember, MessageReaction, PartialUser, Role, User } from "discord.js";
 import { BaseRole } from "../classes/BaseRole";
+import MemberModel from "../database/models/MemberModel";
 import roleJSON from "./role.json";
 
 export const onReactionAdd = async (reaction: MessageReaction, user: PartialUser | User) => {
@@ -28,6 +29,14 @@ export const onReactionAdd = async (reaction: MessageReaction, user: PartialUser
     
     try {
         const member: GuildMember = reaction.message.guild!.members.cache.find(member => member.id === user.id)!;
+        let targetMemberData = await MemberModel.findOne({'discordId': member.id});
+        if (!targetMemberData) {
+            targetMemberData = await MemberModel.create({
+                discordId: member.id,
+                username: member.displayName
+            });
+        }
+        
         const baseRole: BaseRole = search(roleJSON.roles, reaction.emoji.name)[0];
         const assignableRole: Role = reaction.message.guild!.roles.cache.find(role => role.id === baseRole.id)!;
         await member.roles.add(assignableRole);
