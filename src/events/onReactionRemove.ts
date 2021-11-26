@@ -26,6 +26,8 @@ export const onReactionRemove = async (reaction: MessageReaction, user: PartialU
         }
     }
 
+    if (user.bot) return;
+
     try {
         const member = reaction.message.guild?.members.cache.find(member => member.id === user.id)!;
         manageMemberData(member);

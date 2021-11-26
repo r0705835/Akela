@@ -32,8 +32,11 @@ function cooldown(command: CommandInt, message: Message) {
 }
 
 export const onMessage = async (message: Message) => {
+    if (message.author.bot) return;
+
     manageMemberData(message.member!);
-    if (!message.content.startsWith(prefix) || message.author.bot) return;
+
+    if (!message.content.startsWith(prefix)) return;
 
     for (const Command of CommandList) {
         if (message.content.startsWith(prefix + Command.name)) {

@@ -27,6 +27,8 @@ export const onReactionAdd = async (reaction: MessageReaction, user: PartialUser
         }
     }
 
+    if (user.bot) return;
+
     try {
         const member: GuildMember = reaction.message.guild!.members.cache.find(member => member.id === user.id)!;
         manageMemberData(member);
