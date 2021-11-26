@@ -3,11 +3,12 @@ import MemberModel from "./models/MemberModel";
 
 export const manageMemberData = async (member: GuildMember) => {
     try {
-        let targetMemberData = await MemberModel.findOne({ 'discordId': member.id });
+        let targetMemberData = await MemberModel.findOne({ 'discordId': member.id, 'guildId': member.guild.id});
         if (!targetMemberData) {
             targetMemberData = await MemberModel.create({
                 discordId: member.id,
-                username: member.user.username
+                guildId: member.guild.id,
+                username: member.user.username,
             });
         }
     } catch (error) {
