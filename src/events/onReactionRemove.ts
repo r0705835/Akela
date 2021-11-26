@@ -1,5 +1,6 @@
 import { MessageReaction, PartialUser, Role, User } from "discord.js";
 import { BaseRole } from "../classes/BaseRole";
+import MemberModel from "../database/models/MemberModel";
 import roleJSON from "./role.json";
 
 
@@ -23,6 +24,18 @@ export const onReactionRemove = async (reaction: MessageReaction, user: PartialU
             console.error('Something went wrong when fetching the user: ', error);
             return;
         }
+    }
+
+    try {
+        let targetMemberData = await MemberModel.findOne({ 'discordId': user.id });
+        if (!targetMemberData) {
+            targetMemberData = await MemberModel.create({
+                discordId: user.id,
+                username: user.username
+            });
+        }
+    } catch (error) {
+        console.error('Something went wrong with checking the activity of the user: ', error);
     }
 
     try {
