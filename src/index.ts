@@ -12,21 +12,21 @@ dotenv.config();
 (async () => {
     if (!validateEnv()) return;
 
-    const BOT = new Client({
+    const client = new Client({
         intents: [Intents.FLAGS.GUILDS, Intents.FLAGS.GUILD_MESSAGES, Intents.FLAGS.GUILD_MEMBERS]
     });
-    BOT.on("ready", () => {
+    client.on("ready", () => {
         console.log("Connected to Discord!");
 
         const guildId = "618754163773538306";
-        const guild = BOT.guilds.cache.get(guildId);
+        const guild = client.guilds.cache.get(guildId);
 
         let commands;
 
         if (guild) {
             commands = guild.commands;
         } else {
-            BOT.application?.commands
+            client.application?.commands
         }
 
         commands?.create({
@@ -35,11 +35,11 @@ dotenv.config();
         })
     });
 
-    BOT.on('interactionCreate', async (interaction) => await onInteractionCreate(interaction));
-    BOT.on("messageCreate", async (message) => await onMessage(message));
-    BOT.on('messageReactionAdd', async (reaction, user) => await onReactionAdd(reaction, user));
-    BOT.on('messageReactionRemove', async (reaction, user) => await onReactionRemove(reaction, user));
-    BOT.on('voiceStateUpdate', async (oldState, newState) => await onVoiceStateUpdate(oldState, newState));
+    client.on('interactionCreate', async (interaction) => await onInteractionCreate(interaction));
+    client.on("messageCreate", async (message) => await onMessage(message));
+    client.on('messageReactionAdd', async (reaction, user) => await onReactionAdd(reaction, user));
+    client.on('messageReactionRemove', async (reaction, user) => await onReactionRemove(reaction, user));
+    client.on('voiceStateUpdate', async (oldState, newState) => await onVoiceStateUpdate(oldState, newState));
     await connectDatabase();
-    await BOT.login(process.env.BOT_TOKEN);
+    await client.login(process.env.BOT_TOKEN);
 })();
