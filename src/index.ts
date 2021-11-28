@@ -36,7 +36,7 @@ dotenv.config();
     });
 
     BOT.on('interactionCreate', async (interaction) => await onInteractionCreate(interaction));
-    BOT.on("message", async (message) => await onMessage(message));
+    BOT.on("messageCreate", async (message) => await onMessage(message));
     BOT.on('messageReactionAdd', async (reaction, user) => await onReactionAdd(reaction, user));
     BOT.on('messageReactionRemove', async (reaction, user) => await onReactionRemove(reaction, user));
     BOT.on('voiceStateUpdate', async (oldState, newState) => await onVoiceStateUpdate(oldState, newState));
