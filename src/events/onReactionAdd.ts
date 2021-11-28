@@ -1,9 +1,9 @@
-import { GuildMember, MessageReaction, PartialUser, Role, User } from "discord.js";
+import { GuildMember, MessageReaction, PartialMessageReaction, PartialUser, Role, User } from "discord.js";
 import { BaseRole } from "../classes/BaseRole";
 import { manageMemberData } from "../database/manageMemberData";
 import roleJSON from "./role.json";
 
-export const onReactionAdd = async (reaction: MessageReaction, user: PartialUser | User) => {
+export const onReactionAdd = async (reaction: PartialMessageReaction | MessageReaction, user: PartialUser | User) => {
     //if (reaction.message.id !== process.env.roleMessage) return;
 
     // When we receive a reaction we check if the reaction is partial or not
@@ -32,7 +32,7 @@ export const onReactionAdd = async (reaction: MessageReaction, user: PartialUser
     try {
         const member: GuildMember = reaction.message.guild!.members.cache.find(member => member.id === user.id)!;
         manageMemberData(member);
-        const baseRole: BaseRole = search(roleJSON.roles, reaction.emoji.name)[0];
+        const baseRole: BaseRole = search(roleJSON.roles, reaction.emoji.name!)[0];
         const assignableRole: Role = reaction.message.guild!.roles.cache.find(role => role.id === baseRole.id)!;
         await member.roles.add(assignableRole);
     } catch (error) {

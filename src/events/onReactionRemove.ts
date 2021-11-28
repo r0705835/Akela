@@ -1,10 +1,10 @@
-import { MessageReaction, PartialUser, Role, User } from "discord.js";
+import { MessageReaction, PartialMessageReaction, PartialUser, Role, User } from "discord.js";
 import { BaseRole } from "../classes/BaseRole";
 import { manageMemberData } from "../database/manageMemberData";
 import roleJSON from "./role.json";
 
 
-export const onReactionRemove = async (reaction: MessageReaction, user: PartialUser | User) => {
+export const onReactionRemove = async (reaction: PartialMessageReaction | MessageReaction, user: PartialUser | User) => {
     // When we receive a reaction we check if the reaction is partial or not
     if (reaction.partial) {
         // If the message this reaction belongs to was removed the fetching might result in an API error, which we need to handle
@@ -31,7 +31,7 @@ export const onReactionRemove = async (reaction: MessageReaction, user: PartialU
     try {
         const member = reaction.message.guild?.members.cache.find(member => member.id === user.id)!;
         manageMemberData(member);
-        let baseRole: BaseRole = search(roleJSON.roles, reaction.emoji.name)[0];
+        let baseRole: BaseRole = search(roleJSON.roles, reaction.emoji.name!)[0];
         const assignableRole: Role = reaction.message.guild?.roles.cache.find(role => role.id === baseRole.id)!;
         await member.roles.remove(assignableRole);
     } catch (error) {
