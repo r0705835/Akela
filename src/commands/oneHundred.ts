@@ -1,6 +1,6 @@
-import { CommandInt } from "../interfaces/CommandInt";
-import CamperModel from "../database/models/CamperModel";
 import { MessageEmbed } from 'discord.js';
+import CamperModel from "../database/models/CamperModel";
+import { CommandInt } from "../interfaces/CommandInt";
 
 export const oneHundred: CommandInt = {
     name: "100",
@@ -32,11 +32,13 @@ export const oneHundred: CommandInt = {
         oneHundredEmbed.setTitle("100 Days of Code");
         oneHundredEmbed.setDescription(text);
         oneHundredEmbed.setAuthor(author.username + "#" + author.discriminator, author.displayAvatarURL());
-        oneHundredEmbed.addField("Round", targetCamperData.round, true);
-        oneHundredEmbed.addField("Day", targetCamperData.day, true);
+        oneHundredEmbed.addField("Round", targetCamperData.round.toString(), true);
+        oneHundredEmbed.addField("Day", targetCamperData.day.toString(), true);
         oneHundredEmbed.setFooter("Day completed: " + new Date(targetCamperData.timestamp).toLocaleDateString());
 
-        await channel.send(oneHundredEmbed);
+        await channel.send({
+            embeds: [oneHundredEmbed]
+        });
         await message.delete();
     }
 }

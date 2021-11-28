@@ -9,7 +9,7 @@ export const edit: CommandInt = {
         const [, targetId, ...text] = content.split(" ");
         const targetMessage = await channel.messages.fetch(targetId);
 
-        if(!targetMessage) {
+        if (!targetMessage) {
             await channel.send("That does not appear to be a valid message ID.");
             return;
         }
@@ -22,8 +22,10 @@ export const edit: CommandInt = {
         }
 
         targetEmbed.setDescription(text.join(" "));
-        
-        await targetMessage.edit(targetEmbed);
+
+        await targetMessage.edit({
+            embeds: [targetEmbed]
+        });
         await message.delete();
     }
 }

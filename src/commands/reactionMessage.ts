@@ -10,7 +10,9 @@ export const reactionMessage: CommandInt = {
         const reactionEmbed = new MessageEmbed();
         reactionEmbed.setTitle("Role assigner");
         reactionEmbed.setDescription("React ⛏️ to this message to get the minecraft role");
-        await channel.send(reactionEmbed);
+        await channel.send({
+            embeds: [reactionEmbed]
+        });
         await message.delete();
 
     }

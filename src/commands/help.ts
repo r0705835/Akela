@@ -1,5 +1,5 @@
-import { CommandInt } from "../interfaces/CommandInt";
 import { MessageEmbed } from 'discord.js';
+import { CommandInt } from "../interfaces/CommandInt";
 import { CommandList } from "./_CommandsList";
 
 export const help: CommandInt = {
@@ -11,7 +11,9 @@ export const help: CommandInt = {
         helpEmbed.setTitle("Available Commands!");
         helpEmbed.setDescription("These are the available commands for this bot.");
         helpEmbed.addField("Commands:",
-        CommandList.map((el) => `\`$${el.name}\`: ${el.description}`).join("\n"));
-        await message.channel.send(helpEmbed);
+            CommandList.map((el) => `\`$${el.name}\`: ${el.description}`).join("\n"));
+        await message.channel.send({
+            embeds: [helpEmbed]
+        });
     }
 }

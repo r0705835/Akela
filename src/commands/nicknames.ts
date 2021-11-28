@@ -19,8 +19,10 @@ export const nicknames: CommandInt = {
                     names.push(member.nickname);
                 }
             });
-            nicknamesEmbed.addField("Nicknames:", names);
-            await message.channel.send(nicknamesEmbed);
+            nicknamesEmbed.addField("Nicknames:", names.toString());
+            await message.channel.send({
+                embeds: [nicknamesEmbed]
+            });
         } catch (error) {
             console.log(error);
         }

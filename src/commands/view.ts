@@ -1,6 +1,6 @@
-import { CommandInt } from "../interfaces/CommandInt";
-import CamperModel from "../database/models/CamperModel";
 import { MessageEmbed } from "discord.js";
+import CamperModel from "../database/models/CamperModel";
+import { CommandInt } from "../interfaces/CommandInt";
 
 export const view: CommandInt = {
     name: "view",
@@ -22,14 +22,16 @@ export const view: CommandInt = {
                 targetCamperData.timestamp
             ).toLocaleDateString()}.`
         );
-        camperEmbed.addField("Round", targetCamperData.round, true);
-        camperEmbed.addField("Day", targetCamperData.day, true);
+        camperEmbed.addField("Round", targetCamperData.round.toString(), true);
+        camperEmbed.addField("Day", targetCamperData.day.toString(), true);
         camperEmbed.setAuthor(
             author.username + "#" + author.discriminator,
             author.displayAvatarURL()
         );
 
-        await channel.send(camperEmbed);
+        await channel.send({
+            embeds: [camperEmbed]
+        });
         await message.delete();
 
     }
