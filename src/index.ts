@@ -5,7 +5,7 @@ import { connectDatabase } from "./database/connectDatabase";
 import { onMessage } from "./events/onMessage";
 import { onReactionAdd } from "./events/onReactionAdd";
 import { onReactionRemove } from "./events/onReactionRemove";
-//import { onVoiceStateUpdate } from "./events/onVoiceStateUpdate";
+import { onVoiceStateUpdate } from "./events/onVoiceStateUpdate";
 import { validateEnv } from "./utils/validateEnv";
 import { onInteractionCreate } from './events/onInteractionCreate';
 
@@ -39,7 +39,7 @@ import { onInteractionCreate } from './events/onInteractionCreate';
     BOT.on("message", async (message) => await onMessage(message));
     BOT.on('messageReactionAdd', async (reaction, user) => await onReactionAdd(reaction, user));
     BOT.on('messageReactionRemove', async (reaction, user) => await onReactionRemove(reaction, user));
-    /*BOT.on('voiceStateUpdate', async(oldState, newState) => await onVoiceStateUpdate(oldState, newState));*/
+    BOT.on('voiceStateUpdate', async(oldState, newState) => await onVoiceStateUpdate(oldState, newState));
     await connectDatabase();
     await BOT.login(process.env.BOT_TOKEN);
 })();
