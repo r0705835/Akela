@@ -1,6 +1,7 @@
 import { Client, Intents } from "discord.js";
 import dotenv from 'dotenv';
 import { connectDatabase } from "./database/connectDatabase";
+import { onceReady } from "./events/onceReady";
 import { onInteractionCreate } from './events/onInteractionCreate';
 import { onMessage } from "./events/onMessage";
 import { onReactionAdd } from "./events/onReactionAdd";
@@ -15,26 +16,7 @@ dotenv.config();
     const client = new Client({
         intents: [Intents.FLAGS.GUILDS, Intents.FLAGS.GUILD_MESSAGES, Intents.FLAGS.GUILD_MEMBERS]
     });
-    client.on("ready", () => {
-        console.log("Connected to Discord!");
-
-        const guildId = "618754163773538306";
-        const guild = client.guilds.cache.get(guildId);
-
-        let commands;
-
-        if (guild) {
-            commands = guild.commands;
-        } else {
-            client.application?.commands
-        }
-
-        commands?.create({
-            name: 'ping',
-            description: 'replies with pong'
-        })
-    });
-
+    client.once("ready", async (client) => await onceReady(client));
     client.on('interactionCreate', async (interaction) => await onInteractionCreate(interaction));
     client.on("messageCreate", async (message) => await onMessage(message));
     client.on('messageReactionAdd', async (reaction, user) => await onReactionAdd(reaction, user));
