@@ -1,18 +1,16 @@
-import { CacheType, CommandInteraction, Interaction } from "discord.js";
+import { Interaction } from "discord.js";
+import { slashCommandList } from "../commands/_CommandsList";
 
 
 export const onInteractionCreate = async (interaction: Interaction) => {
-    if(!interaction.isCommand) { 
-        return;
-    }
+	if (!interaction.isCommand()) return;
 
-    const command = interaction as CommandInteraction;
-
-    const { commandName, options } = command;
-
-    if (commandName === 'ping') {
-        command.reply({
-            content: 'pong',
-        })
-    }
+	try {
+		const commandName = interaction.commandName;
+		const executeableCommand = slashCommandList.get(commandName)!;
+		executeableCommand.run(interaction);
+	} catch (error) {
+		console.error(error);
+		return interaction.reply({ content: 'There was an error while executing this command!', ephemeral: true });
+	}
 }
