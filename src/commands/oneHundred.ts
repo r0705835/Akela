@@ -10,7 +10,8 @@ export const oneHundred: CommandInt = {
         const { author, channel, content } = message;
         const text = content.split("").slice(1).join(" ");
 
-        let targetCamperData = await CamperModel.findOne();
+        let targetCamperData = await CamperModel.findOne({ discordId: author.id });
+        
         if (!targetCamperData) {
             targetCamperData = await CamperModel.create({
                 discordId: author.id,
