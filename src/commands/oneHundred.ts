@@ -1,20 +1,23 @@
+import { SlashCommandBuilder } from '@discordjs/builders';
 import { MessageEmbed } from 'discord.js';
 import CamperModel from "../database/models/CamperModel";
-import { CommandInt } from "../interfaces/CommandInt";
+import { SlashCommandInt } from '../interfaces/SlashCommandInt';
 
-export const oneHundred: CommandInt = {
-    name: "100",
-    description: "Creates a 100 Days of Code update",
-    cooldown: 3,
-    run: async (message) => {
-        const { author, channel, content } = message;
-        const text = content.split("").slice(1).join(" ");
 
-        let targetCamperData = await CamperModel.findOne({ discordId: author.id });
-        
+export const oneHundred: SlashCommandInt = {
+    data: new SlashCommandBuilder()
+        .setName("100")
+        .addStringOption(option =>
+            option.setName("description")
+                .setDescription("The description of your 100 Days of Code update."))
+        .setDescription("Creates a 100 Days of Code update."),
+    run: async (interaction) => {
+        const user = interaction.user;
+        let targetCamperData = await CamperModel.findOne({ discordId: user.id });
+
         if (!targetCamperData) {
             targetCamperData = await CamperModel.create({
-                discordId: author.id,
+                discordId: user.id,
                 round: 1,
                 day: 0,
                 timestamp: Date.now()
@@ -29,17 +32,25 @@ export const oneHundred: CommandInt = {
             await targetCamperData.save();
         }
 
-        const oneHundredEmbed = new MessageEmbed();
-        oneHundredEmbed.setTitle("100 Days of Code");
-        oneHundredEmbed.setDescription(text);
-        oneHundredEmbed.setAuthor(author.username + "#" + author.discriminator, author.displayAvatarURL());
-        oneHundredEmbed.addField("Round", targetCamperData.round.toString(), true);
-        oneHundredEmbed.addField("Day", targetCamperData.day.toString(), true);
-        oneHundredEmbed.setFooter("Day completed: " + new Date(targetCamperData.timestamp).toLocaleDateString());
+        try {
+            const oneHundredEmbed = new MessageEmbed();
+            oneHundredEmbed.setTitle("100 Days of Code");
 
-        await channel.send({
-            embeds: [oneHundredEmbed]
-        });
-        await message.delete();
+            if (interaction.options.getString("description")) {
+                oneHundredEmbed.setDescription(interaction.options.getString("description")!);
+            }
+            oneHundredEmbed.setAuthor(user.username + "#" + user.discriminator, user.displayAvatarURL());
+            oneHundredEmbed.addField("Round", targetCamperData.round.toString(), true);
+            oneHundredEmbed.addField("Day", targetCamperData.day.toString(), true);
+            oneHundredEmbed.setFooter("Day completed: " + new Date(targetCamperData.timestamp).toLocaleDateString());
+
+            await interaction.reply({
+                embeds: [oneHundredEmbed],
+                ephemeral: true
+            });
+        } catch (error) {
+            console.error(error);
+        }
+
     }
 }
