@@ -6,6 +6,8 @@ export const ping: SlashCommandInt = {
         .setName('ping')
         .setDescription('Replies with pong!'),
     run: async (interaction) => {
-        return interaction.reply("Pong!");
+        await interaction.reply({
+            content: "Pong!", ephemeral: true
+        });
     }
 }
