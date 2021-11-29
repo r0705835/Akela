@@ -1,17 +1,19 @@
+import { SlashCommandBuilder } from '@discordjs/builders';
 import { MessageEmbed } from "discord.js";
 import CamperModel from "../database/models/CamperModel";
-import { CommandInt } from "../interfaces/CommandInt";
+import { SlashCommandInt } from "../interfaces/SlashCommandInt";
 
-export const view: CommandInt = {
-    name: "view",
-    description: "View your current 100 Days of Code progress",
-    cooldown: 3,
-    run: async (message) => {
-        const { author, channel, content } = message;
-        const targetCamperData = await CamperModel.findOne({ discordId: author.id });
+
+export const view: SlashCommandInt = {
+    data: new SlashCommandBuilder()
+        .setName("view")
+        .setDescription("View your current 100 Days of Code progress"),
+    run: async (interaction) => {
+        const user = interaction.user;
+        const targetCamperData = await CamperModel.findOne({ discordId: user.id });
 
         if (!targetCamperData) {
-            await channel.send("You have not started the challenge yet.");
+            await interaction.reply("You have not started the challenge yet.");
             return;
         }
 
@@ -25,14 +27,12 @@ export const view: CommandInt = {
         camperEmbed.addField("Round", targetCamperData.round.toString(), true);
         camperEmbed.addField("Day", targetCamperData.day.toString(), true);
         camperEmbed.setAuthor(
-            author.username + "#" + author.discriminator,
-            author.displayAvatarURL()
+            user.username + "#" + user.discriminator,
+            user.displayAvatarURL()
         );
 
-        await channel.send({
+        await interaction.reply({
             embeds: [camperEmbed]
         });
-        await message.delete();
-
     }
 }
