@@ -1,19 +1,18 @@
+import { SlashCommandBuilder } from '@discordjs/builders';
 import { MessageEmbed } from "discord.js";
-import { CommandInt } from "../interfaces/CommandInt";
+import { SlashCommandInt } from "../interfaces/SlashCommandInt";
 
-export const reactionMessage: CommandInt = {
-    name: "reactionMessage",
-    description: "Create a message that can assign roles",
-    cooldown: 3,
-    run: async (message) => {
-        const { channel } = message;
+
+export const reactionMessage: SlashCommandInt = {
+    data: new SlashCommandBuilder()
+        .setName("reactionMessage")
+        .setDescription("Create a message that can assign roles."),
+    run: async (interaction) => {
         const reactionEmbed = new MessageEmbed();
         reactionEmbed.setTitle("Role assigner");
         reactionEmbed.setDescription("React ⛏️ to this message to get the minecraft role");
-        await channel.send({
+        await interaction.reply({
             embeds: [reactionEmbed]
         });
-        await message.delete();
-
     }
 }
