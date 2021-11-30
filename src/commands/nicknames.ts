@@ -1,18 +1,20 @@
+import { SlashCommandBuilder } from '@discordjs/builders';
 import { MessageEmbed } from 'discord.js';
-import { CommandInt } from "../interfaces/CommandInt";
+import { SlashCommandInt } from '../interfaces/SlashCommandInt';
 
-export const nicknames: CommandInt = {
-    name: "nicknames",
-    description: "Returns the nickname of all players in the server",
-    cooldown: 3,
-    run: async (message) => {
+
+export const nicknames: SlashCommandInt = {
+    data: new SlashCommandBuilder()
+        .setName("nicknames")
+        .setDescription("Returns the nickname of all players in the server."),
+    run: async (interaction) => {
         const nicknamesEmbed = new MessageEmbed();
         nicknamesEmbed.setTitle("Nicknames!");
         nicknamesEmbed.setDescription("Names of everyone in the server.");
         nicknamesEmbed.setColor("#71368A");
         try {
             const names: string[] = [];
-            const guild = message.guild!;
+            const guild = interaction.guild!;
             const members = await guild.members.fetch({ time: 30000, force: true });
             members.forEach(member => {
                 if (member.nickname) {
@@ -20,12 +22,11 @@ export const nicknames: CommandInt = {
                 }
             });
             nicknamesEmbed.addField("Nicknames:", names.toString());
-            await message.channel.send({
+            await interaction.reply({
                 embeds: [nicknamesEmbed]
             });
         } catch (error) {
             console.log(error);
         }
-
     }
 }

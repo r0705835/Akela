@@ -11,7 +11,7 @@ import { reactionMessage } from "./reactionMessage";
 import { view } from "./view";
 
 
-export const CommandList: CommandInt[] = [nicknames, interaction];
+export const CommandList: CommandInt[] = [interaction];
 
 export const slashCommandList: Collection<string, SlashCommandInt> = new Collection();
 slashCommandList.set(ping.data.name, ping);
@@ -20,3 +20,4 @@ slashCommandList.set(view.data.name, view);
 slashCommandList.set(oneHundred.data.name, oneHundred);edit
 slashCommandList.set(edit.data.name, edit);
 slashCommandList.set(reactionMessage.data.name, reactionMessage);
+slashCommandList.set(nicknames.data.name, nicknames);
