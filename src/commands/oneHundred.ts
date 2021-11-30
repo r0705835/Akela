@@ -28,9 +28,9 @@ export const oneHundred: SlashCommandInt = {
         if (targetCamperData.day > 100) {
             targetCamperData.day = 1;
             targetCamperData.round++;
-            targetCamperData.timestamp = Date.now();
-            await targetCamperData.save();
         }
+        targetCamperData.timestamp = Date.now();
+        await targetCamperData.save();
 
         try {
             const oneHundredEmbed = new MessageEmbed();
@@ -46,7 +46,6 @@ export const oneHundred: SlashCommandInt = {
 
             await interaction.reply({
                 embeds: [oneHundredEmbed],
-                ephemeral: true
             });
         } catch (error) {
             console.error(error);
